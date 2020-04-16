@@ -1,0 +1,168 @@
+;; (var input ["t" "a" "t" "b" "b" "b" "t" "t" "c" "c" "t" "c" "d" "d"])
+(var input ["jkl" "jkl" "ghi" "jkl" "mno" "jkl" "pqr" "abc" "mno" "abc" "abc" "ghi" "jkl" "mno" "pqr" "def" "pqr" "def" "pqr" "abc" "jkl" "def" "pqr" "abc" "mno" "def" "def" "abc" "ghi" "jkl" "mno" "mno" "ghi" "abc" "ghi" "ghi" "def" "abc" "ghi" "pqr" "abc" "abc" "ghi" "jkl" "mno" "pqr" "pqr" "mno" "ghi" "abc" "abc" "abc" "pqr" "ghi" "ghi" "jkl" "ghi" "def" "pqr" "pqr" "mno" "jkl" "mno" "mno" "abc" "def" "mno" "abc" "pqr" "mno" "mno" "jkl" "def" "mno" "ghi" "jkl" "jkl" "mno" "ghi" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl"])
+
+;; (var output [])
+
+;; (set array 0 "first element of array")
+;; array[0] = "first element of array";
+
+
+;; (console.log input)
+
+;; (each str input (console.log str))
+
+(def square (x) (* x x))
+
+(def inc (x) (+ x 1))
+
+;; (var letters `[ a b c d ])
+;; (var letters ["t" "a" "t" "b" "b" "b" "t" "t" "c" "c" "t" "c" "d" "d"])
+(var letters ["jkl" "jkl" "ghi" "jkl" "mno" "jkl" "pqr" "abc" "mno" "abc" "abc" "ghi" "jkl" "mno" "pqr" "def" "pqr" "def" "pqr" "abc" "jkl" "def" "pqr" "abc" "mno" "def" "def" "abc" "ghi" "jkl" "mno" "mno" "ghi" "abc" "ghi" "ghi" "def" "abc" "ghi" "pqr" "abc" "abc" "ghi" "jkl" "mno" "pqr" "pqr" "mno" "ghi" "abc" "abc" "abc" "pqr" "ghi" "ghi" "jkl" "ghi" "def" "pqr" "pqr" "mno" "jkl" "mno" "mno" "abc" "def" "mno" "abc" "pqr" "mno" "mno" "jkl" "def" "mno" "ghi" "jkl" "jkl" "mno" "ghi" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl"])
+
+(var output [])
+
+(each (letter index) letters
+    (set letters letter index)
+    (set output letter 0)
+;;    (pipe letter (.to-upper-case) (console.log))
+)
+
+(console.log output)
+
+(each (letter index) letters
+    (set output letter (inc (get output letter)))
+)
+
+;; (console.log letters)
+
+(console.log (array? output))
+
+(console.log (keys output))
+
+
+
+(console.log output)
+
+;; (console.log (get output "b"))
+
+(var maxPad 1)
+
+(each (thing index) output
+    (console.log index)
+    ;; (console.log "lol")
+)
+
+(var foo `[ a b c d ])
+(var bar [])
+(each (letter index) foo
+    (set bar letter index)
+    (console.log index)
+    (console.log (get bar letter))
+)
+(console.log bar)
+
+(each (letter index) bar
+    (console.log (get bar "d"))
+)
+
+(console.log (get bar "c"))
+
+
+;; (console.log (inc (get output "b")))
+
+;; (console.log output)
+
+
+;; (console.log (.sort input))
+
+
+
+(def plusStuff (x y) (+ x y))
+
+(console.log (plusStuff "foo" "bar"))
+
+(def incZero (y) (+ 0 y))
+
+(console.log incZero((incZero "9")))
+
+(console.log (length "0009"))
+
+;; function leftPad(str, padString, length) {
+;; 	while (str.length < length)
+;; 		str = padString + str;
+;; 	return str;
+;; }
+;;
+;; console.log(leftPad("99", "0", 4))
+
+(def lpad (s, p, l)
+    (while (< (length s) l)
+        (assign s (incZero s))
+        ;; (console.log s)
+    )
+    ;; return s
+)
+
+(var padded (lpad (String 88) "0" 6))
+
+(console.log padded)
+
+;; (console.log (String 88))
+
+
+(each k (keys output)
+    (console.log k)
+    (console.log (get output k))
+    (console.log (length (String (get output k))))
+    (console.log (lpad (String (get output k)) "0" 3) )
+)
+
+(console.log (plusStuff (parseInt "0055") 5))
+
+
+
+
+;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;;
+
+
+
+
+(console.log "HELLO")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

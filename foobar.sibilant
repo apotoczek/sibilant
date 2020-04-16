@@ -1,0 +1,115 @@
+;; init sample input array
+;; (var input ["jkl" "jkl" "ghi" "jkl" "mno" "jkl" "foobar" "pqr" "abc" "mno" "abc" "abc" "ghi" "jkl" "ghi" "mno" "pqr" "def" "pqr" "def" "pqr" "abc" "jkl" "def" "pqr" "abc" "mno" "def" "def" "abc" "ghi" "jkl" "mno" "mno" "ghi" "abc" "ghi" "ghi" "def" "abc" "ghi" "pqr" "abc" "abc" "ghi" "jkl" "mno" "pqr" "pqr" "mno" "ghi" "abc" "abc" "abc" "pqr" "ghi" "ghi" "jkl" "ghi" "def" "pqr" "pqr" "mno" "jkl" "mno" "mno" "abc" "def" "mno" "abc" "pqr" "mno" "mno" "jkl" "def" "mno" "ghi" "jkl" "jkl" "mno" "ghi" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl" "jkl"])
+;; (var input ["t" "a" "t" "b" "b" "b" "t" "t" "c" "c" "t" "c"])
+
+(def gen-input [length]
+  (var samples ["abc" "def" "ghi" "jkl" "mno" "pqr"])
+  (.from Array {length: length}
+               (#> (get samples (.floor Math (* (.random Math)
+	                                        (get samples 'length)))))))
+
+(var input (gen-input 1000))
+
+;; init helper functions and variables
+(def inc (x) (+ x 1))  ;; increment by 1
+(def add (x y) (+ x y))  ;; simple add or string concat
+(def lpz (y) (+ 0 y))  ;; left pad one 0
+(def lpd (s, p, l)  ;; left pad string s with string p until it is length l
+    (while (< (length s) l) (assign s (lpz s)))
+)
+(var pad 1)  ;; padding size for occurrence counts
+(var occ [])  ;; occurrences for each unique string
+
+;; init each unique string occurrence to 0
+(each (str index) input
+    (set occ str 0)
+)
+
+;; count occurrences
+(each (str index) input
+    (set occ str (inc (get occ str)))
+)
+
+(each k (keys occ)
+    (var len (length (String (get occ k))))
+    (if (> len pad) (assign pad len))
+)
+(assign pad (inc pad))  ;; ensure pad is one gt actual max occurrence count so all start with 0
+
+(var out [])  ;; output array sorted by occurrences
+(var i 0)  ;; index for output array
+(each k (keys occ)
+    (set out i (add (lpd (String (get occ k)) "0" pad) k))  ;; left pad counts with 0s
+    (assign i (inc i))
+)
+
+(assign out (.reverse (.sort out)))  ;; sort by occurrence counts desc
+
+;; string slicing
+(macro splitStr (arr) '(.slice @arr pad))
+(macro splitOcc (arr) '(.slice @arr 0 pad))
+
+(var ret [])  ;; final output of "string": count sorted desc by counts
+(each occurrence out
+    (set ret (splitStr occurrence) (parseInt (splitOcc occurrence)))
+)
+
+(console.log ret)
+
+
+;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;; ;;
+
+
+(def gen-input [length]
+  (var samples ["abc" "def" "ghi" "jkl" "mno" "pqr"])
+  (.from Array {length: length}
+               (#> (get samples (.floor Math (* (.random Math)
+	                                        (get samples 'length)))))))
+
+(var input (gen-input 10000))
+
+;; init helper functions and variables
+(def inc (x) (+ x 1))  ;; increment by 1
+(def add (x y) (+ x y))  ;; simple add or string concat
+(def lpz (y) (+ 0 y))  ;; left pad one 0
+(def lpd (s, p, l)  ;; left pad string s with string p until it is length l
+    (while (< (length s) l) (assign s (lpz s)))
+)
+(var pad 1)  ;; padding size for occurrence counts
+(var occ [])  ;; occurrences for each unique string
+
+;; init each unique string occurrence to 0
+(each (str index) input
+    (set occ str 0)
+)
+
+;; count occurrences
+(each (str index) input
+    (set occ str (inc (get occ str)))
+)
+
+(each k (keys occ)
+    (var len (length (String (get occ k))))
+    (if (> len pad) (assign pad len))
+)
+(assign pad (inc pad))  ;; ensure pad is one gt actual max occurrence count so all start with 0
+
+(var out [])  ;; output array sorted by occurrences
+(var i 0)  ;; index for output array
+(each k (keys occ)
+    (set out i (add (lpd (String (get occ k)) "0" pad) k))  ;; left pad counts with 0s
+    (assign i (inc i))
+)
+
+(assign out (.reverse (.sort out)))  ;; sort by occurrence counts desc
+
+;; string slicing
+(macro splitStr (arr) '(.slice @arr pad))
+(macro splitOcc (arr) '(.slice @arr 0 pad))
+
+(var ret [])  ;; final output of "string": count sorted desc by counts
+(each occurrence out
+    (set ret (splitStr occurrence) (parseInt (splitOcc occurrence)))
+)
+
+(console.log ret)

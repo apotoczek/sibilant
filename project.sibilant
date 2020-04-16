@@ -1,0 +1,48 @@
+;; This project is written in Sibilant, a LISP that transpiles to
+;; javascript. We are using Sibilant because it's similar to our
+;; language of choice, Clojure, but easier to get started with. It
+;; also doesn't have an extensive ecosystem of native libraries, which
+;; means you'll have to work a little harder to do this task :). Sibilant 
+;; documentation and a tutorial can be found here: https://sibilant.org/
+
+;; Install Sibilant by running:
+
+;; npm install -g sibilant
+
+;; Then, copy this file to a local directory and run it to see an
+;; explanation of the project:
+ 
+;; sibilant -x -f project.sibilant 
+
+;; (console.log "Write a function that will take in a list of strings and")
+;; (console.log "print a list of each distinct string in the input list,")
+;; (console.log "along with the number of times the string occurs in the list.")
+;; (console.log "The strings should be ordered by most to least frequently occuring.")
+
+(var inputs1 ["t" "a" "t" "b" "b" "b" "t" "t" "c" "c" "t" "c"])
+
+;; Your solution goes here.
+
+
+;; Once you have a solution for the above inputs,
+;; test it against these inputs:
+
+(def gen-input [length]
+  (var samples ["abc" "def" "ghi" "jkl" "mno" "pqr"])
+  (.from Array {length: length}
+               (#> (get samples (.floor Math (* (.random Math)
+	                                        (get samples 'length)))))))
+	       
+(var inputs2 (gen-input 80))
+(var inputs3 (gen-input 1000))
+
+
+(console.log inputs2)
+
+
+;; Can you come up with more tests that exercise your code
+;; in ways that prove it is correct?
+
+
+
+
